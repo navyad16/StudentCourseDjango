@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Student Dashboard</h2>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5>My Courses</h5>
+                    <p>View enrolled courses</p>
+                    <a href="/my-orders/" class="btn btn-primary btn-sm">View</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5>Browse Courses</h5>
+                    <p>Explore new courses</p>
+                    <a href="/" class="btn btn-success btn-sm">Browse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

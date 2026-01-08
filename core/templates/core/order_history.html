@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<h3 class="mb-4">Order History</h3>
+
+<table class="table table-bordered table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <th>Course</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th>Purchased On</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for order in orders %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ order.course.title }}</td>
+      <td>₹{{ order.course.price }}</td>
+      <td>
+        <span class="badge bg-success">Paid</span>
+      </td>
+      <td>{{ order.created_at|date:"d M Y" }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="5" class="text-center text-muted">
+        No orders found
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<h3 class="mb-4">Student Orders</h3>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Student</th>
+      <th>Course</th>
+      <th>Paid</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for order in orders %}
+    <tr>
+      <td>{{ order.student.user.username }}</td>
+      <td>{{ order.course.name }}</td>
+
+      <td>
+        {% if order.paid %}
+          <span class="badge bg-success">Paid</span>
+        {% else %}
+          <span class="badge bg-warning text-dark">Pending</span>
+        {% endif %}
+      </td>
+
+      <td>
+        <form method="POST" action="/admin/update-order/{{ order.id }}/">
+          {% csrf_token %}
+          <input type="checkbox" name="paid"
+            {% if order.paid %}checked{% endif %}>
+          <button class="btn btn-sm btn-primary">Update</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

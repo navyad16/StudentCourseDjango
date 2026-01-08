@@ -1,0 +1,101 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<!-- 🔹 HERO SECTION -->
+<div class="row align-items-center mb-5">
+  <div class="col-md-6">
+    <h1>Smart Student Management & Course Platform</h1>
+    <p>Manage students, sell courses, track payments — all in one system.</p>
+    <a href="/courses/" class="btn btn-primary">Browse Courses</a>
+  </div>
+
+  <div class="col-md-6 text-center">
+    <img src="https://via.placeholder.com/500" class="img-fluid">
+  </div>
+</div>
+
+<!-- 🔍 SEARCH + FILTER -->
+<form method="GET" class="row g-2 mb-4">
+    <div class="col-md-5">
+        <input type="text"
+               name="search"
+               value="{{ search_query }}"
+               class="form-control"
+               placeholder="Search courses">
+    </div>
+
+    <div class="col-md-4">
+        <select name="category" class="form-select">
+            <option value="all">All Categories</option>
+            {% for cat in categories %}
+                <option value="{{ cat.id }}"
+                    {% if cat.id|stringformat:"s" == selected_category %}
+                        selected
+                    {% endif %}
+                >
+                    {{ cat.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-primary w-100">
+            Filter
+        </button>
+    </div>
+</form>
+
+<!-- 📚 COURSES LIST -->
+<div class="row">
+    {% for course in courses %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+
+            {% if course.image %}
+                <img src="{{ course.image.url }}" class="card-img-top" height="180">
+            {% else %}
+                <img src="https://via.placeholder.com/300x180" class="card-img-top">
+            {% endif %}
+
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ course.title }}</h5>
+                <p class="card-text">{{ course.description|truncatechars:80 }}</p>
+                <p class="fw-bold">₹ {{ course.price }}</p>
+
+                <div class="mt-auto">
+
+                    {% if user.is_authenticated %}
+                        {% if course.id in enrolled_course_ids %}
+                            <button class="btn btn-success btn-sm w-100" disabled>
+                                Enrolled
+                            </button>
+
+                        {% elif course.id in cart_course_ids %}
+                            <a href="/cart/" class="btn btn-warning btn-sm w-100">
+                                Go to Cart
+                            </a>
+
+                        {% else %}
+                            <a href="/add-to-cart/{{ course.id }}/" class="btn btn-primary btn-sm w-100">
+                                Add to Cart
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <a href="/login/" class="btn btn-secondary btn-sm w-100">
+                            Login to Enroll
+                        </a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+        <div class="col-12">
+            <p class="text-center text-muted">No courses found.</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

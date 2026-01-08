@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<h3>Admin Dashboard</h3>
+
+<a href="/admin/add-course/" class="btn btn-success mb-3">Add New Course</a>
+<a href="/admin/orders/" class="btn btn-warning mb-3">
+  Manage Orders
+</a>
+
+<table class="table table-bordered">
+<tr>
+  <th>Course</th>
+  <th>Price</th>
+  <th>Category</th>
+  <th>Action</th>
+</tr>
+
+{% for course in courses %}
+<tr>
+  <td>{{ course.name }}</td>
+  <td>₹{{ course.price }}</td>
+  <td>{{ course.category }}</td>
+  <td>
+    <a href="/admin/edit-course/{{ course.id }}/" class="btn btn-sm btn-primary">Edit</a>
+  </td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

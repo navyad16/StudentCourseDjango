@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<h3>Add Course</h3>
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <input name="name" class="form-control mb-2" placeholder="Course Name" required>
+  <input type="number" name="price" class="form-control mb-2" placeholder="Price" required>
+  <textarea name="description" class="form-control mb-2" placeholder="Description"></textarea>
+
+  <select name="category" class="form-control mb-2" required>
+    <option value="">Select Category</option>
+    {% for c in categories %}
+      <option value="{{ c.id }}">{{ c.name }}</option>
+    {% endfor %}
+  </select>
+
+  <input type="file" name="image" class="form-control mb-3">
+
+  <button class="btn btn-success">Save Course</button>
+</form>
+
+{% endblock %}

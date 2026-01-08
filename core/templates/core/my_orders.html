@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<h3 class="mb-4">My Enrolled Courses</h3>
+
+{% if orders %}
+  <div class="row">
+    {% for order in orders %}
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="{{ order.course.image.url }}" class="card-img-top">
+          <div class="card-body">
+            <h5>{{ order.course.title }}</h5>
+            <p>Price: ₹{{ order.amount }}</p>
+            <span class="badge bg-success">Enrolled</span>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>You have not enrolled in any courses yet.</p>
+{% endif %}
+
+{% endblock %}
